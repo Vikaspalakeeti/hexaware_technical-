@@ -1,0 +1,75 @@
+package com.hexaware.fooddelivery.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hexaware.fooddelivery.dto.OrdersDTO;
+import com.hexaware.fooddelivery.entity.Orders;
+import com.hexaware.fooddelivery.repository.OrdersRepository;
+
+@Service
+public class OrdersServiceImp implements IOrdersService {
+	@Autowired
+	OrdersRepository repo;
+	
+	@Override
+	public Orders addOrders(OrdersDTO ordersDTO) {
+		Orders orders = new Orders();
+		
+			
+		orders.setCartId(ordersDTO.getCartId());
+		orders.setCustomerId(ordersDTO.getCustomerId());
+		orders.setRestaurantId(ordersDTO.getRestaurantId());
+		orders.setDeliveryAddress(ordersDTO.getDeliveryAddress());
+		orders.setPaymentMethod(ordersDTO.getPaymentMethod());
+		orders.setTotalAmount(ordersDTO.getTotalAmount());
+		
+		
+		return repo.save(orders);
+	}
+
+	@Override
+	public OrdersDTO getById(int cartId) {
+		
+		Orders orders=repo.findById(cartId).orElse(null);
+		OrdersDTO ordersDTO=new OrdersDTO();
+		
+		ordersDTO.setCartId(orders.getCartId());
+		ordersDTO.setCustomerId(orders.getCustomerId());
+		ordersDTO.setRestaurantId(orders.getRestaurantId());
+		ordersDTO.setDeliveryAddress(orders.getDeliveryAddress());
+		ordersDTO.setPaymentMethod(orders.getPaymentMethod());
+		ordersDTO.setTotalAmount(orders.getTotalAmount());
+		
+		
+		return ordersDTO;
+	}
+
+	@Override
+	public List<Orders> getAllOrders() {
+		return repo.findAll();
+	}
+
+	@Override
+	public Orders updateOrders(OrdersDTO ordersDTO) {
+		Orders orders = new Orders();
+		
+		
+		orders.setCartId(ordersDTO.getCartId());
+		orders.setCustomerId(ordersDTO.getCustomerId());
+		orders.setRestaurantId(ordersDTO.getRestaurantId());
+		orders.setDeliveryAddress(ordersDTO.getDeliveryAddress());
+		orders.setPaymentMethod(ordersDTO.getPaymentMethod());
+		orders.setTotalAmount(ordersDTO.getTotalAmount());
+		return repo.save(orders);
+	}
+
+	@Override
+	public void deleteById(int cartId) {
+		Orders orders=repo.findById(cartId).orElse(null);
+		repo.deleteById(orders.getCartId());
+	}
+
+}
