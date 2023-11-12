@@ -6,62 +6,66 @@ import jakarta.persistence.Id;
 @Entity
 public class Cart {
 	@Id
-	private int cart_id;
-	private int customer_id;
-	private int restaurant_id;
-	private int item_id;
+	private int cartId;
+	private int customerId;
+	private int restaurantId;
+	private int itemId;
 	private double price;
 	private int quantity;
 	private double total;
-	private int order_id;
+	private int orderId;
 	
 	public Cart() {
 		super();
 	}
 
-	public Cart(int cart_id, int customer_id, int restaurant_id, int item_id, double price, int quantity, double total,
-			int order_id) {
+	
+
+	public Cart(int cartId, int customerId, int restaurantId, int itemId, double price, int quantity, double total,
+			int orderId) {
 		super();
-		this.cart_id = cart_id;
-		this.customer_id = customer_id;
-		this.restaurant_id = restaurant_id;
-		this.item_id = item_id;
+		this.cartId = cartId;
+		this.customerId = customerId;
+		this.restaurantId = restaurantId;
+		this.itemId = itemId;
 		this.price = price;
 		this.quantity = quantity;
 		this.total = total;
-		this.order_id = order_id;
+		this.orderId = orderId;
 	}
 
-	public int getCart_id() {
-		return cart_id;
+
+
+	public int getCartId() {
+		return cartId;
 	}
 
-	public void setCart_id(int cart_id) {
-		this.cart_id = cart_id;
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customer_id) {
+		this.customerId = customer_id;
 	}
 
-	public int getRestaurant_id() {
-		return restaurant_id;
+	public int getRestaurantId() {
+		return restaurantId;
 	}
 
-	public void setRestaurant_id(int restaurant_id) {
-		this.restaurant_id = restaurant_id;
+	public void setRestaurantId(int restaurant_id) {
+		this.restaurantId = restaurant_id;
 	}
 
-	public int getItem_id() {
-		return item_id;
+	public int getItemId() {
+		return itemId;
 	}
 
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
+	public void setItemId(int item_id) {
+		this.itemId = item_id;
 	}
 
 	public double getPrice() {
@@ -88,20 +92,24 @@ public class Cart {
 		this.total = total;
 	}
 
-	public int getOrder_id() {
-		return order_id;
+	public int getOrderId() {
+		return orderId;
 	}
 
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
+	public void setOrderId(int order_id) {
+		this.orderId = order_id;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "Cart [cart_id=" + cart_id + ", customer_id=" + customer_id + ", restaurant_id=" + restaurant_id
-				+ ", item_id=" + item_id + ", price=" + price + ", quantity=" + quantity + ", total=" + total
-				+ ", order_id=" + order_id + "]";
+		return "Cart [cartId=" + cartId + ", customerId=" + customerId + ", restaurantId=" + restaurantId + ", itemId="
+				+ itemId + ", price=" + price + ", quantity=" + quantity + ", total=" + total + ", orderId=" + orderId
+				+ "]";
 	}
+
+	
 	
 	
 	
