@@ -1,50 +1,58 @@
 package com.hexaware.fooddelivery.entity;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotEmpty;
-
+/*
+ * 
+ * @Author:Karthik
+ * Date:14-11-2023
+ * Description: Entity class of Orders
+ * 
+ * 
+ */
 @Entity
 public class Restaurants {
 	@Id
 	private int restaurantId;
-	@NotEmpty
 	private String restaurantName;
     private String cuisineType;
     private String location;
     private double rating;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customers customers;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Menu menu;
+    @ManyToMany
+    @JoinTable(
+        name = "restaurant_customer")
+    private List<Customers> customers;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Orders orders;
-    
-    
-    
-	public Customers getCustomers() {
+    public List<Customers> getCustomers() {
 		return customers;
 	}
-	public void setCustomers(Customers customers) {
+	public void setCustomers(List<Customers> customers) {
 		this.customers = customers;
 	}
+	
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Menu menu;
+
+
 	public Menu getMenu() {
 		return menu;
 	}
+
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	public Orders getOrders() {
-		return orders;
-	}
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
+
+	
 	public Restaurants() {
 		super();
 	}

@@ -1,21 +1,41 @@
 package com.hexaware.fooddelivery.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.ManyToOne;
 
+/*
+ * 
+ * @Author:Karthik&Vikas 
+ * Date:14-11-2023
+ * Description: Entity class of Orders
+ * 
+ * 
+ */
 @Entity
 public class Orders {
 	@Id
 	private int cartId;
-	@NotNull
+	
 	private int customerId;
 	private int restaurantId;
 	private String deliveryAddress;
 	private String paymentMethod;
-	@NotEmpty
 	private double totalAmount;
+	
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+    private Customers customer;
+
+	public Customers getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customers customer) {
+		this.customer = customer;
+	}
+	
+	
 	public Orders() {
 		super();
 	}

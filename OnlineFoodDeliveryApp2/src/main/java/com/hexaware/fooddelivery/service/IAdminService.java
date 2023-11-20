@@ -15,5 +15,7 @@ public Admin addAdmin(AdminDTO adminDTO);
 	Admin updateAdmin(AdminDTO adminDTO);
 	
 	void deleteById(int adminId);
-
+	 
+	public AdminDTO getByAdminName(String userName);
+ 
 }

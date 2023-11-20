@@ -2,21 +2,27 @@ package com.hexaware.fooddelivery.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.fooddelivery.dto.MenuDTO;
 import com.hexaware.fooddelivery.entity.Menu;
-import com.hexaware.fooddelivery.exception.ProductNotFoundException;
+import com.hexaware.fooddelivery.exception.MenuNotFoundException;
 import com.hexaware.fooddelivery.repository.MenuRepository;
 @Service
 public class MenuSeviceImp implements IMenuService {
 	@Autowired
 	MenuRepository repo;
+	
+	Logger logger = LoggerFactory.getLogger(MenuSeviceImp.class);
+
+	
+	
 	@Override
 	public Menu addMenu(MenuDTO menuDTO) {
-		// TODO Auto-generated method stub
 		Menu menu=new Menu();
 		
 		
@@ -25,19 +31,18 @@ public class MenuSeviceImp implements IMenuService {
 		menu.setItemName(menuDTO.getItemName());
 		menu.setDescription(menuDTO.getDescription());
 		menu.setPrice(menuDTO.getPrice());
-		menu.setAvailability(menuDTO.isAvailability());
-		
+		logger.info("Added to Menu with id"+menuDTO.getMenuItemId());
+
 		return repo.save(menu);
 	}
 
 	@Override
 	public MenuDTO getById(int menuItemId) {
-		// TODO Auto-generated method stub
-		Menu menu =repo.findById(menuItemId).orElse(null);
+		Menu menu =repo.findById(menuItemId).orElse(new Menu());
 		
-		if(menu.getMenuItemId() == 0) {
+		if(menu.getMenuItemId()==0) {
 		  
-		  throw new ProductNotFoundException(HttpStatus.NOT_FOUND , "Product Not Found from Service");
+		  throw new MenuNotFoundException(HttpStatus.NOT_FOUND ,"Menu with menuItemId:"+menuItemId+" notfound");
 	}
 	
 		MenuDTO menuDTO=new MenuDTO();
@@ -47,21 +52,22 @@ public class MenuSeviceImp implements IMenuService {
 		menuDTO.setItemName(menu.getItemName());
 		menuDTO.setDescription(menu.getDescription());
 		menuDTO.setPrice(menu.getPrice());
-		menuDTO.setAvailability(menu.isAvailability());
 		
+		logger.info("Get  Menu with id"+menu.getMenuItemId());
+
 		return menuDTO;
 	}
 
 	@Override
 	public List<Menu> getAllMenu() {
-		// TODO Auto-generated method stub
+		logger.info("Fetched all Menu data");
+
 		return repo.findAll();
 	}
 
 	@Override
 	public Menu updateMenu(MenuDTO menuDTO) {
-		// TODO Auto-generated method stub
-Menu menu=new Menu();
+		Menu menu=new Menu();
 		
 		
 		menu.setMenuItemId(menuDTO.getMenuItemId());
@@ -69,7 +75,8 @@ Menu menu=new Menu();
 		menu.setItemName(menuDTO.getItemName());
 		menu.setDescription(menuDTO.getDescription());
 		menu.setPrice(menuDTO.getPrice());
-		menu.setAvailability(menuDTO.isAvailability());
+		logger.info("Updated to Menu with id"+menuDTO.getMenuItemId());
+
 		
 		return repo.save(menu);
 		
@@ -77,16 +84,23 @@ Menu menu=new Menu();
 
 	@Override
 	public void deleteById(int menuItemId) {
-		// TODO Auto-generated method stub
-		Menu menu =repo.findById(menuItemId).orElse(null);
-		repo.deleteById(menu.getMenuItemId());
+	    Menu menu = repo.findById(menuItemId).orElse(null);
 
+	    logger.info("Menu deleted ");
+
+	    if (menu != null) {
+	        repo.deleteById(menu.getMenuItemId());
+	    }
 	}
 
 	@Override
 	public MenuDTO getByItemName(String itemName) {
-		// TODO Auto-generated method stub
 		Menu menu =repo.findByItemName(itemName);
+		if(menu==null) {
+			  throw new MenuNotFoundException(HttpStatus.NOT_FOUND ,"Menu with MenuItemName:"+itemName+" Notfound");
+
+		}
+		
 		MenuDTO menuDTO=new MenuDTO();
 		
 		menuDTO.setMenuItemId(menu.getMenuItemId());
@@ -94,7 +108,9 @@ Menu menu=new Menu();
 		menuDTO.setItemName(menu.getItemName());
 		menuDTO.setDescription(menu.getDescription());
 		menuDTO.setPrice(menu.getPrice());
-		menuDTO.setAvailability(menu.isAvailability());
+		logger.info("Get  Menu with name"+menu.getItemName());
+
+		
 		
 		return menuDTO;
 	}

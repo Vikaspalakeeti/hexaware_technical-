@@ -1,29 +1,57 @@
 package com.hexaware.fooddelivery.dto;
 
-import com.hexaware.fooddelivery.entity.Customers;
-import com.hexaware.fooddelivery.entity.Menu;
-import com.hexaware.fooddelivery.entity.Orders;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToOne;
+import java.util.List;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class RestaurantsDTO {
 
 	private int restaurantId ;
+	
+	@Pattern(regexp = "[a-zA-Z]{2,50}",message = "restaurantName minimum of size 2")
+
 	private String restaurantName ;
+	@Pattern(regexp = "[a-zA-Z]{2,50}",message = "cuisineType minimum of size 2")
+
     private String cuisineType;
+	@NotBlank(message = "mention location")
     private String location;
+	@Min(value=0,message = "give some rating")
     private double rating;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customers customers;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    private Menu menu;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    private Orders orders;
-    
+	
+	
+	private List<Integer> customerIds;
+
+	public List<Integer> getCustomerIds() {
+		return customerIds;
+	}
+
+	public void setCustomerIds(List<Integer> customerIds) {
+		this.customerIds = customerIds;
+	}
+	
+	
+	
+	
+	
+	private int menuItemId;
+
+	public int getMenuItemId() {
+		return menuItemId;
+	}
+
+	public void setMenuItemId(int menuItemId) {
+		this.menuItemId = menuItemId;
+	}
+	
+	
+	
+	
+   
 	public RestaurantsDTO() {
 		super();
 	}
@@ -65,24 +93,7 @@ public class RestaurantsDTO {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
-	public Customers getCustomers() {
-		return customers;
-	}
-	public void setCustomers(Customers customers) {
-		this.customers = customers;
-	}
-	public Menu getMenu() {
-		return menu;
-	}
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-	public Orders getOrders() {
-		return orders;
-	}
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
+	
     
 
 }
